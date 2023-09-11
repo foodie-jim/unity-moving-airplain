@@ -6,7 +6,6 @@ public class PlayerControllerX : MonoBehaviour
 {
     public float speed;
     public float rotationSpeed;
-    public float verticalInput;
 
     // Start is called before the first frame update
     void Start()
@@ -17,13 +16,16 @@ public class PlayerControllerX : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // get the user's vertical input
-        verticalInput = Input.GetAxis("Vertical");
-
         // move the plane forward at a constant rate
-        transform.Translate(Vector3.back * speed);
+        transform.Translate(Vector3.forward * speed);
+
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        // Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 moveDirection = new Vector3(v, h, 0);
 
         // tilt the plane up/down based on up/down arrow keys
-        transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime);
+        transform.Rotate(moveDirection * rotationSpeed * Time.deltaTime);
     }
 }
